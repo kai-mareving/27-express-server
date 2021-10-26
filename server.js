@@ -1,15 +1,23 @@
 const express = require('express');
 const path = require('path');
+let isLogged = false;
 
 const app = express();
-
-app.use(express.static(path.join(__dirname, '/public')));
 
 app.use((req, res, next) => {
   res.show = (name) => {
     res.sendFile(path.join(__dirname, `/views/${name}`));
   };
   next();
+});
+
+app.use(express.static(path.join(__dirname, '/public')));
+
+
+/* Specific endpoints */
+app.use('/user*', (req, res, next) => {
+  if(isLogged) next();
+  else res.send('You need to login to access this page!');
 });
 
 app.get('/', (req, res) => {
