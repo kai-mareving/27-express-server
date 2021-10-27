@@ -4,6 +4,8 @@ let isLogged = false;
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '/public'))); //ASK: where should this be?
+
 app.use((req, res, next) => {
   res.show = (name) => {
     res.sendFile(path.join(__dirname, `/views/${name}`));
@@ -11,38 +13,35 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '/public')));
-
-
 /* Specific endpoints */
 app.use('/user', (req, res, next) => {
   if(isLogged) next();
   else res.show('forbidden.html');
 });
-//ASK MENTOR why photo doesnt show in /user/panel and ../settings
+//ASK: why photo doesnt show in /user/panel and ../settings
 
 app.get('/', (req, res) => {
-  res.show('index.html');
+  res.show('home.html');
+});
+
+app.get('/home', (req, res) => {
+  res.show('home.html');
 });
 
 app.get('/about', (req, res) => {
   res.show('about.html');
 });
 
-app.get('/contact', (req, res) => {
-  res.show('contact.html');
+app.use('/user/panel', (req, res) => {
+  res.show('forbidden.html');
 });
 
-app.get('/info', (req, res) => {
-  res.show('info.html');
-});
-
-app.get('/history', (req, res) => {
-  res.show('history.html');
+app.use('/user/settings', (req, res) => {
+  res.show('forbidden.html');
 });
 
 app.use((req, res) => {
-  // res.status(404).send('404 not found...');
+  //or res.status(404).send('404 not found...');
   res.status(404).show('404.html');
 });
 
