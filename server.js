@@ -14,30 +14,18 @@ app.use((req, res, next) => {
 });
 
 /* Specific endpoints */
-app.use('/user', (req, res, next) => {
+app.use(['/user', '/user/', '/user/panel', '/user/settings'], (req, res, next) => {
   if(isLogged) next();
   else res.show('forbidden.html');
 });
 //ASK: why photo doesnt show in /user/panel and ../settings
 
-app.get('/', (req, res) => {
-  res.show('home.html');
-});
-
-app.get('/home', (req, res) => {
+app.get(['/', '/home'], (req, res) => {
   res.show('home.html');
 });
 
 app.get('/about', (req, res) => {
   res.show('about.html');
-});
-
-app.use('/user/panel', (req, res) => {
-  res.show('forbidden.html');
-});
-
-app.use('/user/settings', (req, res) => {
-  res.show('forbidden.html');
 });
 
 app.use((req, res) => {
