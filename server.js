@@ -4,7 +4,7 @@ let isLogged = false;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/public'))); //ASK: where should this be?
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use((req, res, next) => {
   res.show = (name) => {
@@ -14,11 +14,10 @@ app.use((req, res, next) => {
 });
 
 /* Specific endpoints */
-app.use(['/user', '/user/', '/user/panel', '/user/settings'], (req, res, next) => {
+app.use('/user*', (req, res, next) => {
   if(isLogged) next();
   else res.show('forbidden.html');
 });
-//ASK: why photo doesnt show in /user/panel and ../settings
 
 app.get(['/', '/home'], (req, res) => {
   res.show('home.html');
