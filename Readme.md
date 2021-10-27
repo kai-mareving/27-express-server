@@ -4,4 +4,4 @@ A simple server app build with NodeJS, Express (_express@4.17.1_) and Handlebars
 
 ### Usage
 
-`node server.js` or simply: `npm start`
+`nodemon server.js` or simply: `npm start`
