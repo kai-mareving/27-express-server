@@ -1,4 +1,18 @@
-h1 {
-  font-weight: lighter;
-  font-style: italic;
+h2 {
+  font-weight: bold;
 }
+
+.dark {
+  background-color: #463E3F;
+  color: #FEFCFF;
+}
+
+.dark h1 {
+  display: none;
+}
+
+nav a { color: #736F6E; text-decoration: none; padding: 0 5px; border: 1px dashed #736F6E; }
+
+.dark nav a{ color: #FEFCFF; }
+
+footer { font-size: 10px; }
