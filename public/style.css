@@ -1,9 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 30px;
+  line-height: 1.7;
+  text-align: center;
+}
+
 h2 {
-  font-weight: bold;
+  font-weight: 700;
+}
+
+p {
+  color: #999;
+  font-size: 14px;
 }
 
 .dark {
-  background-color: #463E3F;
+  background: #282c34;
   color: #FEFCFF;
 }
 
@@ -11,8 +27,102 @@ h2 {
   display: none;
 }
 
-nav a { color: #736F6E; text-decoration: none; padding: 0 5px; border: 1px dashed #736F6E; }
+nav a {
+  color: #736F6E;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 0 5px;
+  border: 1px dashed #736F6E;
+}
 
-.dark nav a{ color: #FEFCFF; }
+.dark nav a {
+  color: #FEFCFF;
+}
 
-footer { font-size: 10px; }
+footer {
+  font-size: 10px;
+}
+
+form {
+  margin: 0 20px;
+}
+
+label {
+  display: block;
+}
+
+input, textarea {
+  margin: 4px auto;
+  padding: 5px 16px;
+  background: rgba(0,0,0,0.2);
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  font-size: inherit;
+}
+
+textarea {
+  margin: 10px auto;
+  display: block;
+  width: 300px;
+  height: 100px;
+}
+
+button {
+  margin: 5px 0;
+  padding: 10px 25px;
+  display: inline-block;
+  background: #01916d;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  font-weight: 700;
+  color: #FEFCFF;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.isSent {
+  margin: 12px auto 18px auto;
+  padding: 8px 6px;
+  display: flex;
+  max-width: 240px;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+  background: #01916d;
+  font-size: smaller;
+  border: 3px solid #01916d;
+  border-radius: 8px;
+  opacity: 1;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+.isError {
+  margin: 12px auto 18px auto;
+  padding: 8px 6px;
+  display: flex;
+  max-width: 240px;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+  background: #ff3c00;
+  font-size: smaller;
+  border: 3px solid #ff3c00;
+  border-radius: 8px;
+  opacity: 1;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
