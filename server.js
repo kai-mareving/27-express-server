@@ -37,7 +37,7 @@ app.get('/contact', (req, res) => {
   res.render('contact', { layout: 'dark' });
 });
 
-app.post('/contact/send-message', upload.single('file'), function (req, res) {
+app.post('/contact/send-message', upload.single('file'), (req, res) => {
   const { author, sender, title, message } = req.body;
 
   if (author && sender && title && message && req.file) {
