@@ -2,8 +2,17 @@ const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
 const multer  = require('multer');
-const upload = multer({ dest: './public/data/uploads/' });
 let isLogged = false;
+
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/data/uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '_' + file.originalname);
+  }
+});
+const upload = multer({ storage: fileStorageEngine });
 
 const app = express();
 app.engine('.hbs', hbs());
@@ -11,8 +20,8 @@ app.engine('.hbs', hbs());
 app.set('view engine', '.hbs');
 
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: false })); //ASK: is this still needed?
+//// app.use(express.json());
 
 /* Specific endpoints */
 app.use('/user*', (req, res, next) => {
