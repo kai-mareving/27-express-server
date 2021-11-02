@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
+  background: #bdbcbc;
   font-family: 'Cormorant Garamond', serif;
   font-size: 16px;
   font-weight: 400;
@@ -14,7 +15,7 @@ h2 {
 }
 
 p {
-  color: #999;
+  color: #636363;
   font-size: 14px;
 }
 
@@ -28,7 +29,7 @@ p {
 }
 
 nav a {
-  color: #736F6E;
+  color: #5f5c5b;
   font-family: 'Cormorant Garamond', serif;
   font-weight: 700;
   font-size: 18px;

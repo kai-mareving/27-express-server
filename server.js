@@ -1,24 +1,24 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
-const multer  = require('multer');
-let isLogged = false;
 
+const multer = require('multer');
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './public/data/uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '_' + file.originalname);
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
 const upload = multer({ storage: fileStorageEngine });
+
+let isLogged = false;
 
 const app = express();
 app.engine('.hbs', hbs());
 //or app.engine('.hbs', hbs({ extname: 'hbs', layoutsDir: './views/layouts', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
-
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: false })); //ASK: is this still needed?
 //// app.use(express.json());
@@ -39,26 +39,30 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/hello/:name', (req, res) => {
-  res.render('hello', { name: req.params.name });
+  res.render('hello', { layout: 'dark', name: req.params.name });
 });
 
 app.get('/contact', (req, res) => {
   res.render('contact', { layout: 'dark' });
 });
 
+/* ON FORM SUBMIT */
 app.post('/contact/send-message', upload.single('file'), (req, res) => {
-  const { author, sender, title, message } = req.body;
+  try {
+    const { author, sender, title, message } = req.body;
+    const { filename, originalname } = req.file;
 
-  if (author && sender && title && message && req.file) {
-    res.render('contact', { layout: 'dark', isSent: true, file: req.file.originalname });
-  } else {
+    if (author && sender && title && message && filename) {
+      res.render('contact', { layout: 'dark', isSent: true, file: originalname });
+    }
+  } catch (error) {
     res.render('contact', { layout: 'dark', isError: true });
   }
 });
 
 app.use((req, res) => {
-  //or res.status(404).send('404 not found...');
   res.status(404).render('404');
+  //or res.status(404).send('404 not found...');
 });
 
 app.listen(8000, () => {
