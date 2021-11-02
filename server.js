@@ -8,7 +8,8 @@ const fileStorageEngine = multer.diskStorage({
     cb(null, './public/data/uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, file.originalname);
+    // cb(null, file.fieldname + Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({ storage: fileStorageEngine });
@@ -20,6 +21,7 @@ app.engine('.hbs', hbs());
 //or app.engine('.hbs', hbs({ extname: 'hbs', layoutsDir: './views/layouts', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/public/data/uploads')));
 app.use(express.urlencoded({ extended: false })); //ASK: is this still needed?
 //// app.use(express.json());
 
@@ -47,13 +49,14 @@ app.get('/contact', (req, res) => {
 });
 
 /* ON FORM SUBMIT */
-app.post('/contact/send-message', upload.single('file'), (req, res) => {
+app.post('/contact/send-message', upload.single('image'), (req, res) => {
+  console.log(req.file);
   try {
     const { author, sender, title, message } = req.body;
     const { filename, originalname } = req.file;
 
     if (author && sender && title && message && filename) {
-      res.render('contact', { layout: 'dark', isSent: true, file: originalname });
+      res.render('contact', { layout: 'dark', isSent: true, image: originalname });
     }
   } catch (error) {
     res.render('contact', { layout: 'dark', isError: true });
