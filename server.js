@@ -8,8 +8,7 @@ const fileStorageEngine = multer.diskStorage({
     cb(null, './public/data/uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
-    // cb(null, file.fieldname + Date.now() + path.extname(file.originalname));
+    cb(null, file.fieldname + Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({ storage: fileStorageEngine });
@@ -56,7 +55,7 @@ app.post('/contact/send-message', upload.single('image'), (req, res) => {
     const { filename, originalname } = req.file;
 
     if (author && sender && title && message && filename) {
-      res.render('contact', { layout: 'dark', isSent: true, image: originalname });
+      res.render('contact', { layout: 'dark', isSent: true, image: filename });
     }
   } catch (error) {
     res.render('contact', { layout: 'dark', isError: true });
