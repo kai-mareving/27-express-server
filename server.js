@@ -14,20 +14,23 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 let isLogged = false;
+let userName = '';
 
 const app = express();
 app.engine('.hbs', hbs());
 //or app.engine('.hbs', hbs({ extname: 'hbs', layoutsDir: './views/layouts', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.static(path.join(__dirname, '/public/data/uploads')));
-app.use(express.urlencoded({ extended: false })); //ASK: is this still needed?
+//// app.use(express.urlencoded({ extended: false }));
 //// app.use(express.json());
 
 /* Specific endpoints */
 app.use('/user*', (req, res, next) => {
-  if(isLogged) next();
-  else res.render('forbidden');
+  if (isLogged) {
+    next();
+  } else {
+    res.render('forbidden');
+  }
 });
 
 
@@ -39,7 +42,13 @@ app.get('/about', (req, res) => {
   res.render('about', { layout: 'dark' });
 });
 
+app.get('/user/panel', (req, res) => {
+  res.render('userpanel', { layout: 'dark' , name: userName});
+});
+
 app.get('/hello/:name', (req, res) => {
+  isLogged = true;
+  userName = req.params.name;
   res.render('hello', { layout: 'dark', name: req.params.name });
 });
 
